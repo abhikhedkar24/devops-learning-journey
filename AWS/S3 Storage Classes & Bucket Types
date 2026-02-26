@@ -1,0 +1,205 @@
+Amazon S3 Storage Classes & Bucket Types
+
+📌 What I Learned Today
+
+Today I learned how Amazon S3 organizes data using different storage classes based on access frequency and cost optimization. I also understood different types of S3 buckets and how object-level permissions affect public access.
+
+1️⃣ What is Amazon S3?
+
+Amazon S3 (Simple Storage Service) is an object storage service used to store and retrieve unlimited data in the form of objects inside buckets.
+
+Each object contains:
+
+Data
+
+Metadata
+
+Unique key
+
+S3 is globally available, but buckets are created in a specific AWS region.
+
+2️⃣ Why S3 Has Multiple Storage Classes?
+
+The main purpose of storage classes is cost optimization.
+
+Not all data is accessed frequently. AWS divides storage classes based on:
+
+Frequency of access
+
+Storage cost
+
+Retrieval cost
+
+Retrieval time
+
+Availability Zones replication
+
+3️⃣ S3 Storage Classes
+🔹 S3 Standard
+
+Used for frequently accessed data
+
+No retrieval cost
+
+Low latency
+
+Stored across ≥ 3 Availability Zones
+
+High availability
+
+Use Case:
+Web applications, active content, dynamic websites.
+
+🔹 S3 Standard-IA (Infrequent Access)
+
+Lower storage cost than Standard
+
+Retrieval cost applicable
+
+Millisecond retrieval
+
+Multi-AZ storage
+
+Use Case:
+Backup data accessed occasionally.
+
+🔹 S3 One Zone-IA
+
+Stored in only 1 Availability Zone
+
+Cheaper than Standard-IA
+
+Retrieval cost applicable
+
+Risk of data loss if AZ fails
+
+Use Case:
+Non-critical backup data.
+
+🔹 S3 Glacier Instant Retrieval
+
+Rarely accessed data
+
+Instant retrieval
+
+Lower storage cost
+
+Retrieval cost applicable
+
+🔹 S3 Glacier Flexible Retrieval
+
+Retrieval time: minutes to hours
+
+Very low storage cost
+
+Used for archival
+
+🔹 S3 Glacier Deep Archive
+
+Lowest storage cost
+
+Retrieval time: 12+ hours
+
+Used for long-term compliance storage
+
+🔹 S3 Intelligent-Tiering
+
+Automatically moves data between tiers
+
+Based on access pattern
+
+Slight monitoring cost
+
+Use Case:
+When access pattern is unpredictable.
+
+4️⃣ S3 Bucket Types
+🔹 General Purpose Bucket
+
+Most commonly used bucket type
+
+Available in all regions
+
+Supports public or private configuration
+
+ACLs can be enabled or disabled
+
+This is the default bucket type used in most real-world scenarios.
+
+🔹 Directory Bucket
+
+Used for high-performance workloads
+
+Related to S3 Express One Zone
+
+🔹 Table Bucket
+
+Used for structured data workloads
+
+🔹 Vector Bucket
+
+Used for AI/ML vector data storage
+
+Not commonly used in general DevOps scenarios
+
+5️⃣ Practical Performed Today
+
+Created a general-purpose bucket in Ohio region
+
+Uploaded an object
+
+Tried accessing object using public URL
+
+Object was not accessible
+
+Understood that:
+
+Bucket being public does NOT mean object is public
+
+Object ACL must allow public access
+
+Made object public during upload
+
+Successfully accessed object via URL
+
+Attempted to delete bucket
+
+Could not delete because bucket contained objects
+
+Learned that bucket must be empty before deletion
+
+6️⃣ Key Observations
+
+S3 service is global, but bucket is regional
+
+Bucket names must be globally unique
+
+Public bucket ≠ Public object
+
+Cannot delete non-empty bucket
+
+Storage class selection affects cost significantly
+
+7️⃣ Use Case Example
+
+Example scenario:
+
+For an e-commerce company:
+
+Product images → S3 Standard
+
+Monthly backups → Standard-IA
+
+Old financial records → Glacier Deep Archive
+
+Unpredictable access logs → Intelligent-Tiering
+
+8️⃣ What I Understood Conceptually
+
+Storage classes are mainly about balancing cost and access pattern.
+
+If data is accessed frequently → use Standard.
+If accessed rarely → use IA or Glacier.
+If unsure → use Intelligent-Tiering.
+
+Choosing correct storage class helps reduce cloud costs significantly.
